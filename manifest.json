@@ -1,0 +1,15 @@
+{
+  "manifest_version": 3,
+  "name": "my chrome home",
+  "version": "0.1",
+  "description": "Chrome Extension customized chrome home tabs",
+  "icons": {
+    "16": "./favicon.png"
+  },
+  "permissions": [
+    "storage"
+  ],
+  "chrome_url_overrides": {
+    "newtab": "dist/index.html"
+  }
+}
