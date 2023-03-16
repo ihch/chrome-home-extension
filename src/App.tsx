@@ -76,13 +76,40 @@ const BackGround: React.FC<BackGroundProps> = ({ src, children }) => {
   )
 }
 
+const useDropLink = () => {
+  const [url, setUrl] = useState('');
+
+  const onDragOver = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+  };
+
+  const onDrop = useCallback((event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    setUrl(event.dataTransfer.getData('text'));
+  }, [setUrl]);
+
+  return {
+    onDragOver,
+    onDrop,
+    url,
+  };
+}
+
 const App = () => {
   const { onImageInput, src } = useImageStateChromeExtensionStorage();
+
+  const { onDragOver, onDrop, url } = useDropLink();
 
   return (
     <main className='w-screen h-screen relative'>
       <BackGround src={src}>
         <ImageUploader onInput={onImageInput} />
+        <div className='w-full h-full' onDrop={onDrop} onDragOver={onDragOver}>
+          <h2 className='bold'>Hoge</h2>
+          {url && (
+            <a href={url} className='text-blue-400 underline'>{url}</a>
+          )}
+        </div>
       </BackGround>
     </main>
   )
